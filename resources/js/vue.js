@@ -4,19 +4,21 @@ import {
 import router from './lib/router'
 import {
     store
-} from './lib/store'
+} from './modules/store'
 import App from './components/App.vue'
 import {
     library
 } from '@fortawesome/fontawesome-svg-core'
 import {
-    faPlus
+    faPlus,
+    faHeart,
+    faComment
 } from '@fortawesome/free-solid-svg-icons'
 import {
     FontAwesomeIcon
 } from '@fortawesome/vue-fontawesome'
 
-library.add(faPlus)
+library.add(faPlus, faHeart, faComment)
 
 const app = createApp(App)
 app.component('fa', FontAwesomeIcon)
