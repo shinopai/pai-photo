@@ -38,13 +38,13 @@
                 <a href="{{ route('register') }}"><span class="cursor-pointer text-md">Register</span></a>
                 @else
                 <span class="cursor-pointer text-md">{{ Auth::user()->name }}さん</span>
-                <form action="{{ route('logout') }}" method="post" id="logout-form">
+                <form action="{{ route('logout') }}" method="post" id="logout-form" class="inline-block">
                     @csrf
                     <span class="cursor-pointer text-md" onclick="document.getElementById('logout-form').submit();">Logout</span>
                 </form>
                 @endguest
             </div>
-            <div class="text-white absolute right-3 top-6 sp-menu-button"><span class="material-icons text-3xl" style="vertical-align: -5px;">
+            <div class="text-white absolute right-3 top-6 sp-menu-button lg:hidden"><span class="material-icons text-3xl" style="vertical-align: -5px;">
                     menu
                 </span></div>
 
