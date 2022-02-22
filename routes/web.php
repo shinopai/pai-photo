@@ -6,3 +6,7 @@ Route::get('/{any}', function () {
 
 // auth user
 Auth::routes();
+
+if (config('app.env') === 'production' or config('app.env') === 'heroku') {
+    URL::forceScheme('https');
+}
