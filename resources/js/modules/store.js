@@ -4,7 +4,37 @@ import {
 import Axios from 'axios'
 
 export const store = createStore({
-    state() {
+    modules: {
+        like: {
+            namespaced: true,
+            state: () => {
+                return {
+                    likes: null,
+                    err: null,
+                }
+            },
+            mutations: {
+                setLikes(state, likesData) {
+                    state.likes = likesData
+                },
+                setErr(state, errData) {
+                    state.err = errData
+                }
+            },
+            actions: {
+                async getLikes(context, photoId) {
+                    await Axios.get('/api/photos/' + photoId + '/likes')
+                        .then(res => {
+                            context.commit('setLikes', res.data)
+                        })
+                        .catch(err => {
+                            context.commit('setErr', err.response)
+                        })
+                }
+            }
+        }
+    },
+    state: () => {
         return {
             user: null,
             likes: null,
@@ -53,6 +83,6 @@ export const store = createStore({
                 .catch(err => {
                     context.commit('setErr', err.response)
                 })
-        }
+        },
     }
 })

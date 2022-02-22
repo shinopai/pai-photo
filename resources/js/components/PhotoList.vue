@@ -1,11 +1,11 @@
 <template>
 <div>
-    <button v-if="currentUser" class="p-2 pl-5 pr-5 bg-transparent border-2 border-gray-500 text-gray-500 rounded-lg hover:bg-gray-500 hover:text-gray-100 focus:border-4 focus:border-gray-300 ml-5" @click="isActive = !isActive"> <fa icon="plus" class="mr-2" />Submit a Photo</button>
+    <button v-if="currentUser" class="p-2 pl-5 pr-5 bg-transparent border-2 border-gray-500 text-gray-500 rounded-lg hover:bg-gray-500 hover:text-gray-100 focus:border-4 focus:border-gray-300 lg:ml-5 mx-auto block mt-5" @click="isActive = !isActive"> <fa icon="plus" class="mr-2" />Submit a Photo</button>
 
     <PhotoForm :isActive="isActive" :currentUser="currentUser" />
 
-<div class="flex flex-wrap justify-evenly items-center mt-10 lg:w-5/6 gap-2 mx-auto">
-	<div v-for="photo in photos" :key="photo" class="item w-1/4 h-40 border-2 relative cursor-pointer" @mouseover="isLayerActive(photo.id)" @mouseout="isLayerInactive(photo.id)">
+<div class="lg:flex lg:flex-wrap lg:justify-evenly lg:items-center mt-10 lg:w-5/6 gap-2 mx-auto px-1">
+	<div v-for="photo in photos" :key="photo" class="item lg:w-1/4 lg:h-40 h-48 border-2 relative cursor-pointer mt-2" @mouseover="isLayerActive(photo.id)" @mouseout="isLayerInactive(photo.id)">
   <img v-if="photo.path == 'dammy.jpg'" src="images/dammy.jpg" alt="dammy" class="object-fill h-full w-full"><img v-else :src="photo.path" alt="photo" class="object-fill h-full w-full">
   <div class="hidden" :id="`layer${photo.id}`">
   <router-link :to="{ name: 'photo-detail', params: { id: photo.id }}">

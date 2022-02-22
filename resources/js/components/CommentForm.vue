@@ -41,7 +41,7 @@ import { useStore } from 'vuex';
 export default {
   props: {
     currentUser: Object,
-    photoId: Number
+    photoId: String
   },
   setup(props, context) {
     const content = ref('')

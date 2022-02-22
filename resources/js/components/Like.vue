@@ -1,6 +1,6 @@
 <template>
 <div>
-      <span v-if="isLiked" class="absolute top-2 right-2 bg-white py-1 px-2 rounded cursor-pointer" @click="unlikePhoto"><fa icon="heart" class="text-red-500 mr-2" />{{ likes }}</span>
+      <span v-if="typeof isLiked == 'number'" class="absolute top-2 right-2 bg-white py-1 px-2 rounded cursor-pointer" @click="unlikePhoto"><fa icon="heart" class="text-red-500 mr-2" />{{ likes }}</span>
       <span v-else class="absolute top-2 right-2 bg-white py-1 px-2 rounded cursor-pointer" @click="likePhoto"><fa icon="heart" class="text-red-500 mr-2" />{{ likes }}</span>
 </div>
 </template>
@@ -19,30 +19,29 @@ export default {
     const photoId = props.photoId
     const currentUserId = props.currentUser.id
     const likes = ref()
-    const isLiked = ref(Boolean)
+    const isLiked = ref()
     const store = useStore()
 
     // get number of this photo's likes
     const getLikes = async () => {
-      await store.dispatch('getLikes', photoId)
-      likes.value = store.state.likes
+      await store.dispatch('like/getLikes', photoId)
+      likes.value = store.state.like.likes
     }
 
     // check if current user like this photo
-    const checkLiked = () => {
-      Axios.get('/api/users/' + currentUserId + '/photos/' + photoId + '/check')
-           .then( res => {
-             isLiked.value = res.data
-             checkLiked()
-           })
-           .catch( err => {
-             console.log(err.response)
-           })
+    const checkLiked = async () => {
+      await Axios.get('/api/users/' + currentUserId + '/photos/' + photoId + '/check')
+          .then(res => {
+            isLiked.value = res.data
+          })
+          .catch(err => {
+              console.log(err.response)
+          })
     }
 
     // show alert if no user logged in
     const showAlert = () => {
-      if(typeof currentUserId == 'undefined'){
+      if(typeof currentUserId != 'number'){
         alert('ログインしてください')
         return false;
       }
@@ -53,6 +52,7 @@ export default {
       showAlert()
       Axios.post('/api/users/' + currentUserId + '/photos/' + photoId + '/like')
            .then( res => {
+             checkLiked()
              getLikes()
            })
            .catch( err => {
@@ -65,6 +65,7 @@ export default {
       showAlert()
       Axios.delete('/api/users/' + currentUserId + '/photos/' + photoId + '/unlike')
            .then( res => {
+             checkLiked()
              getLikes()
            })
            .catch( err => {

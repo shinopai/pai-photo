@@ -10,3 +10,9 @@ window.Vue = require('vue');
 
 // vue entry file
 import './vue';
+
+// fontawesome in blade template
+require('./fontawesome');
+
+// sp menu
+import './lib/sp-menu';
