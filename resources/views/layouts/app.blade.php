@@ -50,10 +50,16 @@
 
             <!-- sp menu -->
             <div class="sp-menu fixed top-20 right-0 text-center w-screen h-screen flex-col justify-center items-center z-10 bg-gray-700 text-white hidden">
-                <div class="menu__item my-3">TOP</div>
-                <div class="menu__item my-3">ABOUT</div>
-                <div class="menu__item my-3">BLOG</div>
-                <div class="menu__item my-3">CONTACT</div>
+                @guest
+                <a href="{{ route('login') }}"><span class="cursor-pointer text-md block my-2">Login</span></a>
+                <a href="{{ route('register') }}"><span class="cursor-pointer text-md block">Register</span></a>
+                @else
+                <span class="cursor-pointer text-md block my-2">{{ Auth::user()->name }}さん</span>
+                <form action="{{ route('logout') }}" method="post" id="logout-form" class="inline-block">
+                    @csrf
+                    <span class="cursor-pointer text-md" onclick="document.getElementById('logout-form').submit();">Logout</span>
+                </form>
+                @endguest
             </div>
         </nav>
 
