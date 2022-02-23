@@ -50,7 +50,7 @@ export default {
 
     // get all photos
     const getAllPhotos = async () => {
-      await Axios.get('/api/photos/?page=' + props.page)
+      await Axios.get('/api/photos?page=' + props.page)
                  .then( res => {
                    pagination.value = res.data
                    photos.value = res.data.data
